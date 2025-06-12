@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import ReactPlayer from 'react-player/youtube';
 import Image from 'next/image';
 import { Play } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
