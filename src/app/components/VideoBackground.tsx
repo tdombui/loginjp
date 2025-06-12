@@ -15,21 +15,19 @@ export default function VideoBackground() {
                 width="100%"
                 height="100%"
                 config={{
-                    youtube: {
-                        playerVars: {
-                            start: 27,
-                            autoplay: 1,
-                            mute: 1,
-                            controls: 0,
-                            modestbranding: 1,
-                            rel: 0,
-                            showinfo: 0,
-                            playsinline: 1,
-                            fs: 0,
-                            disablekb: 1,
-                            iv_load_policy: 3,
-                            playlist: 'pJ8EyNFg9Dk',
-                        },
+                    playerVars: {
+                        autoplay: 1,
+                        start: 27,
+                        mute: 1,
+                        controls: 0,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        playsinline: 1,
+                        fs: 0,
+                        disablekb: 1,
+                        iv_load_policy: 3,
+                        playlist: 'pJ8EyNFg9Dk',
                     },
                 }}
                 className="pointer-events-none"
