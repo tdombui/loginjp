@@ -8,6 +8,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import type { Swiper as SwiperType } from 'swiper';
 
+declare global {
+    interface Window {
+        instgrm?: {
+            Embeds?: {
+                process?: () => void;
+            };
+        };
+    }
+}
+
 const posts = [
     'https://www.instagram.com/p/DGNn09nzWCE/',
     'https://www.instagram.com/reel/DGIS7WLyvR-/',
@@ -26,16 +36,16 @@ export default function InstagramCarousel() {
     const [canScrollRight, setCanScrollRight] = useState(true);
 
     useEffect(() => {
-        if (!(window as any).instgrm) {
+        if (!window.instgrm) {
             const script = document.createElement('script');
             script.src = 'https://www.instagram.com/embed.js';
             script.async = true;
             script.onload = () => {
-                (window as any).instgrm?.Embeds?.process();
+                window.instgrm?.Embeds?.process?.();
             };
             document.body.appendChild(script);
         } else {
-            (window as any).instgrm?.Embeds?.process();
+            window.instgrm?.Embeds?.process?.();
         }
     }, []);
 
@@ -100,8 +110,8 @@ export default function InstagramCarousel() {
                     768: { slidesPerView: 2.2 },
                     1024: { slidesPerView: 3.1 },
                 }}
-                onSwiper={(swiper: SwiperType) => (swiperRef.current = swiper)}
-                onSlideChange={(swiper: SwiperType) => updateScrollState(swiper)}
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+                onSlideChange={(swiper) => updateScrollState(swiper)}
                 onReachBeginning={() => setCanScrollLeft(false)}
                 onReachEnd={() => setCanScrollRight(false)}
             >
