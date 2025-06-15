@@ -5,19 +5,6 @@ import Image from 'next/image';
 
 export default function VideoBackground() {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const [isPlaying, setIsPlaying] = useState(true);
-    const [isMuted, setIsMuted] = useState(true);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-        video.muted = isMuted;
-        if (isPlaying) {
-            video.play().catch(() => { });
-        } else {
-            video.pause();
-        }
-    }, [isPlaying, isMuted]);
 
     return (
         <div className="fixed inset-0 z-0 w-screen h-screen overflow-hidden">
@@ -25,7 +12,6 @@ export default function VideoBackground() {
             <video
                 ref={videoRef}
                 autoPlay
-                muted={isMuted}
                 playsInline
                 preload="auto"
                 className="absolute top-0 left-0 w-full h-full object-cover"

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 const TOTAL_FRAMES = 11; // 0–10 inclusive
 const INITIAL_FRAME = 5;
@@ -87,17 +88,21 @@ export default function KnobViewer({ onChange }: { onChange?: (volume: number) =
             onTouchMove={handleTouchMove}
         >
             {/* Base static plate */}
-            <img
+            <Image
                 src="/knob_frames/pdj_base.webp"
                 alt="Knob base"
                 className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                width={24}
+                height={24}
                 draggable={false}
             />
             {/* Dynamic knob frame */}
-            <img
+            <Image
                 src={`/knob_frames/pdj_knob-${String(frameIndex).padStart(2, '0')}.webp`}
                 alt={`Knob frame ${frameIndex}`}
                 className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                width={24}
+                height={24}
                 draggable={false}
             />
         </div>

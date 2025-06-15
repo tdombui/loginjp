@@ -8,8 +8,6 @@ import YouTubeCarousel from '../app/components/ui/YoutubeCarousel';
 import InstagramCarousel from '../app/components/ui/InstagramCarousel';
 import KnobViewer from './components/ui/KnobViewer';
 import AudioController from '../app/components/ui/AudioController';
-import PlayButton from '../app/components/ui/PlayButton';
-
 
 const VideoBackground = dynamic(() => import('./components/VideoBackground'), { ssr: false });
 

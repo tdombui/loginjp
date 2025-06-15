@@ -2,10 +2,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight, Youtube, Instagram } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Image from 'next/image';
 
 const posts = [
     'https://www.instagram.com/p/DGNn09nzWCE/',
