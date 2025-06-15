@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import type { Swiper as SwiperType } from 'swiper';
 
 const videos = [
     { id: 'pJ8EyNFg9Dk', title: 'Video 1' },
@@ -58,7 +59,7 @@ function YouTubePlaceholder({ videoId, title }: { videoId: string; title: string
 }
 
 export default function YouTubeCarousel() {
-    const swiperRef = useRef<any>(null);
+    const swiperRef = useRef<SwiperType | null>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 

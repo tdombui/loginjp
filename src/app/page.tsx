@@ -12,7 +12,6 @@ import AudioController from '../app/components/ui/AudioController';
 const VideoBackground = dynamic(() => import('./components/VideoBackground'), { ssr: false });
 
 export default function HomePage() {
-  const { scrollYProgress } = useScroll();
   const [volume, setVolume] = useState(0.5);
 
   return (

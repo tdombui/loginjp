@@ -8,6 +8,7 @@ export default function AudioController({ src, volume }: { src: string; volume: 
     const analyserRef = useRef<AnalyserNode | null>(null);
 
     useEffect(() => {
+
         const audio = new Audio(src);
         audio.loop = true;
         audio.volume = volume;
@@ -37,7 +38,7 @@ export default function AudioController({ src, volume }: { src: string; volume: 
         };
 
         updateLevel();
-    }, []);
+    }, [src, volume]);
 
     useEffect(() => {
         if (audioRef.current) {
