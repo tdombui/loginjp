@@ -63,7 +63,7 @@ export default function YouTubeCarousel() {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 
-    const updateScrollState = (swiper: any) => {
+    const updateScrollState = (swiper: SwiperType) => {
         setCanScrollLeft(!swiper.isBeginning);
         setCanScrollRight(!swiper.isEnd);
     };

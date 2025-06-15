@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import YouTubeCarousel from '../app/components/ui/YoutubeCarousel';

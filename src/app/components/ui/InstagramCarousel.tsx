@@ -5,6 +5,7 @@ import { Navigation } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import type { Swiper as SwiperType } from 'swiper';
 
 const posts = [
     'https://www.instagram.com/p/DGNn09nzWCE/',
@@ -19,7 +20,7 @@ const posts = [
 ];
 
 export default function InstagramCarousel() {
-    const swiperRef = useRef<any>(null);
+    const swiperRef = useRef<SwiperType | null>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -37,7 +38,7 @@ export default function InstagramCarousel() {
         }
     }, []);
 
-    const updateScrollState = (swiper: any) => {
+    const updateScrollState = (swiper: SwiperType) => {
         setCanScrollLeft(!swiper.isBeginning);
         setCanScrollRight(!swiper.isEnd);
     };
