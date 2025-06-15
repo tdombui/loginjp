@@ -1,47 +1,84 @@
 'use client';
 
-import React from 'react';
-import ReactPlayer from 'react-player/youtube';
+import React, { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function VideoBackground() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [isMuted, setIsMuted] = useState(true);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        video.muted = isMuted;
+        if (isPlaying) {
+            video.play().catch(() => { });
+        } else {
+            video.pause();
+        }
+    }, [isPlaying, isMuted]);
+
     return (
         <div className="fixed inset-0 z-0 w-screen h-screen overflow-hidden">
-            <ReactPlayer
-                url="https://www.youtube.com/watch?v=pJ8EyNFg9Dk"
-                playing
+            {/* 🌌 Hero Video Background */}
+            <video
+                ref={videoRef}
+                autoPlay
+                muted={isMuted}
+                playsInline
+                preload="auto"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                onEnded={() => {
+                    const video = videoRef.current;
+                    if (video) {
+                        video.pause(); // Ensure reset starts clean
+                        video.currentTime = 0;
+                        requestAnimationFrame(() => {
+                            video.play().catch(() => { });
+                        });
+                    }
+                }}
+            >
+
+                <source
+                    src="https://res.cloudinary.com/dd5cgipkp/video/upload/f_auto,q_auto/v1749797985/hero-dithered-854x480_ip3mgq.webm"
+                    type="video/webm"
+                />
+            </video>
+
+
+
+
+            {/* ✨ VHS Overlay (always playing on top) */}
+            <video
+                autoPlay
                 muted
                 loop
-                controls={false}
-                width="100%"
-                height="100%"
-                config={{
-                    playerVars: {
-                        autoplay: 1,
-                        start: 27,
-                        mute: 1,
-                        controls: 0,
-                        modestbranding: 1,
-                        rel: 0,
-                        showinfo: 0,
-                        playsinline: 1,
-                        fs: 0,
-                        disablekb: 1,
-                        iv_load_policy: 3,
-                        playlist: 'pJ8EyNFg9Dk',
-                    },
-                }}
-                className="pointer-events-none"
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    width: '120%',
-                    height: '120%',
-                    transform: 'translate(-50%, -50%)',
-                    objectFit: 'cover',
-                }}
-            />
-            <div className="absolute inset-0 bg-black/80 z-10" />
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover z-30 pointer-events-none mix-blend-screen opacity-20"
+            >
+                <source
+                    src="https://res.cloudinary.com/dd5cgipkp/video/upload/v1749801143/output_jl6kq4.webm"
+                    type="video/webm"
+                />
+            </video>
+
+            {/* 🌀 Optional Noise Overlay */}
+            <div className="absolute inset-0 z-20 pointer-events-none mix-blend-soft-light opacity-60">
+                <Image
+                    src="/noise.png"
+                    alt="Noise texture"
+                    fill
+                    className="object-cover w-full h-full"
+                    priority
+                />
+            </div>
+
+            {/* 🕶️ Dark overlay for clarity */}
+            <div className="absolute inset-0 bg-black/45 z-30" />
+
+
         </div>
     );
 }

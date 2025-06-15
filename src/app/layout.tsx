@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "login.jp",
+  title: "Login.jp",
   description: "archiving the Japanese experience through music",
 };
 
