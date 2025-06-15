@@ -94,7 +94,10 @@ export default function KnobViewer({ onChange }: { onChange?: (volume: number) =
                 className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 width={24}
                 height={24}
+                quality={100}
                 draggable={false}
+                unoptimized
+
             />
             {/* Dynamic knob frame */}
             <Image
@@ -103,7 +106,10 @@ export default function KnobViewer({ onChange }: { onChange?: (volume: number) =
                 className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 width={24}
                 height={24}
+                quality={100}
                 draggable={false}
+                unoptimized
+
             />
         </div>
     );

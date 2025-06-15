@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -57,10 +58,9 @@ export default function InstagramCarousel() {
                     type="video/webm"
                 />
             </video>
-            {/* Custom login.jp header */}
+
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    {/* <Image src="/icons/thumbnail_white.png" alt="Avatar" width={32} height={32} className="rounded-full" /> */}
                     <span className="text-white font-semibold text-xl">Recent Posts 最近の投稿</span>
                 </div>
                 <a
@@ -73,7 +73,6 @@ export default function InstagramCarousel() {
                 </a>
             </div>
 
-            {/* Nav arrows */}
             {canScrollLeft && (
                 <button
                     onClick={() => swiperRef.current?.slidePrev()}
@@ -101,8 +100,8 @@ export default function InstagramCarousel() {
                     768: { slidesPerView: 2.2 },
                     1024: { slidesPerView: 3.1 },
                 }}
-                onSwiper={(swiper) => (swiperRef.current = swiper)}
-                onSlideChange={updateScrollState}
+                onSwiper={(swiper: SwiperType) => (swiperRef.current = swiper)}
+                onSlideChange={(swiper: SwiperType) => updateScrollState(swiper)}
                 onReachBeginning={() => setCanScrollLeft(false)}
                 onReachEnd={() => setCanScrollRight(false)}
             >
@@ -114,7 +113,7 @@ export default function InstagramCarousel() {
                                 data-instgrm-permalink={url}
                                 data-instgrm-version="14"
                                 style={{
-                                    background: '#000', // outer container only
+                                    background: '#000',
                                     border: 0,
                                     margin: '0 auto',
                                     maxWidth: '400px',
