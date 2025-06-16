@@ -88,7 +88,7 @@ export default function YouTubeCarousel() {
             <div className="relative z-20">
                 {canScrollLeft && (
                     <button
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-[2px] p-2 rounded-full text-white"
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px] p-2 rounded-full text-white"
                         onClick={() => swiperRef.current?.slidePrev()}
                     >
                         <ChevronLeft size={32} />
@@ -97,7 +97,7 @@ export default function YouTubeCarousel() {
 
                 {canScrollRight && (
                     <button
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-[2px] p-2 rounded-full text-white"
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px] p-2 rounded-full text-white"
                         onClick={() => swiperRef.current?.slideNext()}
                     >
                         <ChevronRight size={32} />

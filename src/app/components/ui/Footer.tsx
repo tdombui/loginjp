@@ -7,11 +7,11 @@ export default function Footer() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="w-full px-4 py-6  text-white text-sm flex items-center justify-between  backdrop-blur-[0.5px] font-mono">
-            <span className="opacity-60">
-                © {year} Login.jp
+        <footer className="w-full px-4 py-6  text-white text-md flex items-center justify-between  backdrop-blur-[0.5px] font-mono">
+            <span className="opacity-80">
+                © {year} LOGIN.JP
             </span>
-
+            <span className="text-xs opacity-80">archiving the Japanese experience through music</span>
             <div className="flex gap-4 items-center">
                 <Link
                     href="https://www.instagram.com/login.jp_"

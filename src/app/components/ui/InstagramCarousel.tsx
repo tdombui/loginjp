@@ -86,18 +86,18 @@ export default function InstagramCarousel() {
             {canScrollLeft && (
                 <button
                     onClick={() => swiperRef.current?.slidePrev()}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm p-2 rounded-full"
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px]] p-2 rounded-full"
                 >
-                    <ChevronLeft size={24} className="text-white" />
+                    <ChevronLeft size={32} className="text-white" />
                 </button>
             )}
 
             {canScrollRight && (
                 <button
                     onClick={() => swiperRef.current?.slideNext()}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm p-2 rounded-full"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px]] p-2 rounded-full"
                 >
-                    <ChevronRight size={24} className="text-white" />
+                    <ChevronRight size={32} className="text-white" />
                 </button>
             )}
 
