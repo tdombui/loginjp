@@ -120,7 +120,7 @@ export default function HomePage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           viewport={{ once: true, amount: 0.4 }}
-          className="text-white text-center font-mono text-md md:text-md max-w-xl leading-relaxed select-none"
+          className="text-white text-center font-mono text-md md:text-md max-w-xl leading-relaxed select-none mb-[18rem]"
         >
           archiving the Japanese experience through music
         </motion.p>
@@ -128,7 +128,7 @@ export default function HomePage() {
 
 
       {/* YouTube Carousel Section (lazy mount) */}
-      <section ref={ytRef} className="relative  text-white py-12 z-10 select-none overflow-hidden">
+      <section ref={ytRef} className="relative text-white py-12 z-10 select-none overflow-hidden">
         <video
           autoPlay
           muted
