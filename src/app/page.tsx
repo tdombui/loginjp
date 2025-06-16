@@ -8,6 +8,7 @@ import YouTubeCarousel from '../app/components/ui/YoutubeCarousel';
 import InstagramCarousel from '../app/components/ui/InstagramCarousel';
 import KnobViewer from './components/ui/KnobViewer';
 import AudioController from '../app/components/ui/AudioController';
+import Footer from '../app/components/ui/Footer';
 
 const VideoBackground = dynamic(() => import('./components/VideoBackground'), { ssr: false });
 
@@ -17,10 +18,10 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
       {/* Floating Header */}
-      <header className="fixed top-0 left-0 w-full z-50 h-20 px-2 pointer-events-none select-none">
+      <header className="fixed top-0 left-0 w-full z-50 h-20 pointer-events-none select-none">
         <div className="flex justify-between items-center h-full">
           {/* Left: Logo */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pl-6">
             <Image
               src="/icons/thumbnail_white.png"
               alt="Login.jp Logo"
@@ -38,7 +39,7 @@ export default function HomePage() {
       </header>
 
       {/* LED Meter (floating vertically centered on right margin) */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 pointer-events-auto flex flex-col items-center">
+      <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 pointer-events-auto flex flex-col items-center">
         <AudioController src="/audio/minipops67.mp3" volume={volume} />
       </div>
 
@@ -83,9 +84,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bottom-12 w-full py-6 text-center bg-black text-sm text-white/60 z-10">
-        &copy; {new Date().getFullYear()} login.jp — All rights reserved.
-      </footer>
+      <Footer />
     </main>
   );
 }
