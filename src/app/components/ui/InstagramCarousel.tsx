@@ -55,7 +55,7 @@ export default function InstagramCarousel() {
     };
 
     return (
-        <div className="relative w-full px-4 py-12 z-30 bg-black/40 backdrop-blur-sm">
+        <div className="relative w-full px-6 py-12 z-30 bg-black/40 backdrop-blur-sm">
             <video
                 autoPlay
                 muted

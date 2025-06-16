@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import YouTubeCarousel from '../app/components/ui/YoutubeCarousel';
@@ -14,55 +14,80 @@ const VideoBackground = dynamic(() => import('./components/VideoBackground'), { 
 
 export default function HomePage() {
   const [volume, setVolume] = useState(0.5);
+  const { scrollY } = useScroll();
+  const scale = useTransform(scrollY, [0, 400], [1, 0.5]);
+  const top = useTransform(scrollY, [0, 150], ['50vh', '0.2rem']);
+  const opacity = useTransform(scrollY, [0, 10], [1, 1]);
+  const headerBg = useTransform(scrollY, [0, 100], ['transparent', 'rgba(0,0,0,0.3)']);
+  const headerBlur = useTransform(scrollY, [0, 100], ['blur(0px)', 'blur(8px)']);
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
       {/* Floating Header */}
-      <header className="fixed top-0 left-0 w-full z-50 h-20 pointer-events-none select-none">
+      <motion.header
+        className="fixed top-0 left-0 w-full z-50 h-32 pointer-events-none select-none"
+        style={{
+          backgroundColor: headerBg,
+          backdropFilter: headerBlur,
+          WebkitBackdropFilter: headerBlur,
+        }}
+      >
         <div className="flex justify-between items-center h-full">
-          {/* Left: Logo */}
+          {/* Left: Thumbnail */}
           <div className="flex items-center gap-2 pl-6">
             <Image
               src="/icons/thumbnail_white.png"
-              alt="Login.jp Logo"
+              alt="Login.jp Thumbnail"
               width={48}
               height={48}
               className="object-contain"
+              unoptimized
             />
           </div>
 
-          {/* Right: Knob */}
-          <div className="pointer-events-auto mt-8 ml-auto">
+          {/* Floating + Transitioning Logo */}
+          <motion.div
+            className="fixed left-1/2 z-60 w-64 mt-4 sm:w-80"
+            style={{
+              top,
+              scale,
+              x: '-50%',
+              transformOrigin: 'center',
+            }}
+          >
+            <motion.img
+              src="/icons/loginjp_hero.png"
+              alt="login.jp logo"
+              className="w-full z-50 drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
+              animate={{ rotateY: 360 }}
+              transition={{
+                rotateY: { repeat: Infinity, duration: 10, ease: 'linear' },
+              }}
+            />
+          </motion.div>
+
+          {/* Master Level Knob */}
+          <div className="pointer-events-auto mt-2 ml-auto">
             <KnobViewer onChange={setVolume} />
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      {/* LED Meter (floating vertically centered on right margin) */}
-      <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 pointer-events-auto flex flex-col items-center">
-        <AudioController src="/audio/minipops67.mp3" volume={volume} />
+      {/* LED Meter and Play/Pause Button Column */}
+      <div className="fixed right-2 z-40 pointer-events-auto flex flex-col items-center justify-between h-screen py-4">
+        <AudioController
+          src="https://res.cloudinary.com/dd5cgipkp/video/upload/v1750060326/kanta_ando_d415ol.mp3"
+          volume={volume}
+        />
       </div>
 
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center">
         <VideoBackground />
-        <div className="sticky mt-12 z-20 text-center perspective-[225px]">
-          <motion.img
-            src="/icons/loginjp_hero.png"
-            alt="login.jp logo"
-            className="mx-auto w-64 drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
-            animate={{ rotateY: 360, opacity: [0.8, 1, 0.8] }}
-            transition={{
-              rotateY: { repeat: Infinity, duration: 20, ease: 'linear' },
-              opacity: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
-            }}
-            style={{ transformOrigin: 'center', display: 'inline-block' }}
-          />
-        </div>
       </section>
 
-      {/* Recent Videos / YouTube Carousel Section */}
-      <section className="relative bg-black/50 backdrop-blur-sm text-white py-12 z-10">
+      {/* YouTube Carousel Section */}
+      <section className="relative bg-black/60 backdrop-blur-sm text-white py-12 z-10">
         <video
           autoPlay
           muted
