@@ -117,7 +117,8 @@ export default function AudioController({
             {/* Play/Pause Button - bottom right */}
             <motion.button
                 onClick={togglePlayback}
-                whileTap={{ scale: 0.92 }}
+                whileTap={{ scale: 0.87 }}
+                whileHover={{ scale: .97 }}
                 className={`fixed bottom-6 right-4 z-50 w-18 h-18 rounded-full transition-all duration-300 pointer-events-auto ${isPlaying
                     ? 'ring-[6px] ring-green-400 shadow-[0_0_36px_rgba(0,255,0,0.6)]'
                     : 'ring-0 shadow-none'

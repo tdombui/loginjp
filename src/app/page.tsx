@@ -17,7 +17,6 @@ export default function HomePage() {
   const { scrollY } = useScroll();
   const scale = useTransform(scrollY, [0, 100], [1.1, 0.5]);
   const top = useTransform(scrollY, [0, 150], ['50vh', '0.2rem']);
-  const scaleSpring = useSpring(scale, { stiffness: 120, damping: 20 });
   const topSpring = useSpring(top, { stiffness: 120, damping: 20 });
   const headerBg = useTransform(
     scrollY,
