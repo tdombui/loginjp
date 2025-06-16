@@ -73,12 +73,13 @@ export default function YouTubeCarousel() {
 
             <div className="flex items-center justify-between mb-4">
 
-                <h2 className='text-white font-semibold text-xl'>Recent Videos 最近の動画</h2>
+                <h2 className='text-white font-semibold text-xl'>Recent Videos</h2>
+                {/* 最近の動画 */}
                 <a
                     href="https://www.youtube.com/@loginnjp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg text-blue-400 hover:underline"
+                    className="text-md text-blue-400 hover:underline"
                 >
                     View channel →
                 </a>

@@ -71,13 +71,14 @@ export default function InstagramCarousel() {
 
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <span className="text-white font-semibold text-xl">Recent Posts 最近の投稿</span>
+                    <span className="text-white font-semibold text-xl">Recent Posts</span>
+                    {/* 最近の投稿 */}
                 </div>
                 <a
                     href="https://www.instagram.com/login.jp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg text-blue-400 hover:underline"
+                    className="text-md text-blue-400 hover:underline"
                 >
                     View Instagram →
                 </a>
