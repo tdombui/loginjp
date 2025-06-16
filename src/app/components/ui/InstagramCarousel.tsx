@@ -28,6 +28,16 @@ const posts = [
     'https://www.instagram.com/p/DKSPOckzIPU/',
     'https://www.instagram.com/reel/DKCGcpezhWJ',
     'https://www.instagram.com/reel/DJytlFBzw87/',
+    'https://www.instagram.com/reel/DJBs3f5TA3I/',
+    'https://www.instagram.com/p/DIqr2s9zTkW/',
+    'https://www.instagram.com/reel/DITwF6YzmIy/',
+    'https://www.instagram.com/reel/DIQy_q0zzY0/',
+    'https://www.instagram.com/p/DILm8Pnz7Dh/',
+    'https://www.instagram.com/reel/DHYTtoYTkit/',
+    'https://www.instagram.com/reel/DHGKZfiTQm8/',
+    'https://www.instagram.com/reel/DGfmPhzTutE/',
+    'https://www.instagram.com/reel/DGXwjo1Tgrh/',
+    'https://www.instagram.com/reel/DGSnpVUy_tm/',
 ];
 
 export default function InstagramCarousel() {
@@ -55,87 +65,78 @@ export default function InstagramCarousel() {
     };
 
     return (
-        <div className="relative w-full px-6 py-12 z-30 bg-black/40 backdrop-blur-sm">
-            <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none mix-blend-screen opacity-40"
-            >
-                <source
-                    src="https://res.cloudinary.com/dd5cgipkp/video/upload/v1749801143/output_jl6kq4.webm"
-                    type="video/webm"
-                />
-            </video>
+        <div className="relative w-full px-6 md:px-10 pr-12  py-12 z-30">
+
 
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <span className="text-white font-semibold text-xl">Recent Posts</span>
+                    <span className="text-white font-semibold text-xl font-mono">Recent Posts</span>
                     {/* 最近の投稿 */}
                 </div>
                 <a
                     href="https://www.instagram.com/login.jp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-md text-blue-400 hover:underline"
+                    className="text-sm text-blue-400 hover:underline font-mono"
                 >
                     View Instagram →
                 </a>
             </div>
+            <div className="relative z-20">
+                {canScrollLeft && (
+                    <button
+                        onClick={() => swiperRef.current?.slidePrev()}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px] p-2 rounded-full text-white"
+                    >
+                        <ChevronLeft size={32} />
+                    </button>
+                )}
 
-            {canScrollLeft && (
-                <button
-                    onClick={() => swiperRef.current?.slidePrev()}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px]] p-2 rounded-full"
+                {canScrollRight && (
+                    <button
+                        onClick={() => swiperRef.current?.slideNext()}
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px] p-2 rounded-full text-white"
+                    >
+                        <ChevronRight size={32} />
+                    </button>
+                )}
+
+                <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={20}
+                    slidesPerView={1.1}
+                    breakpoints={{
+                        640: { slidesPerView: 1.2 },
+                        768: { slidesPerView: 2.2 },
+                        1024: { slidesPerView: 3.1 },
+                    }}
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    onSlideChange={(swiper) => updateScrollState(swiper)}
+                    onReachBeginning={() => setCanScrollLeft(false)}
+                    onReachEnd={() => setCanScrollRight(false)}
                 >
-                    <ChevronLeft size={32} className="text-white" />
-                </button>
-            )}
+                    {posts.map((url, i) => (
+                        <SwiperSlide key={i}>
+                            <div className="flex justify-center">
+                                <blockquote
+                                    className="instagram-media"
+                                    data-instgrm-permalink={url}
+                                    data-instgrm-version="14"
+                                    style={{
+                                        background: '#000',
+                                        border: 0,
+                                        margin: '0 auto',
+                                        maxWidth: '400px',
+                                        width: '100%',
+                                        minWidth: '220px',
+                                    }}
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
 
-            {canScrollRight && (
-                <button
-                    onClick={() => swiperRef.current?.slideNext()}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/60 backdrop-blur-[2px]] p-2 rounded-full"
-                >
-                    <ChevronRight size={32} className="text-white" />
-                </button>
-            )}
-
-            <Swiper
-                modules={[Navigation]}
-                spaceBetween={20}
-                slidesPerView={1.1}
-                breakpoints={{
-                    640: { slidesPerView: 1.2 },
-                    768: { slidesPerView: 2.2 },
-                    1024: { slidesPerView: 3.1 },
-                }}
-                onSwiper={(swiper) => (swiperRef.current = swiper)}
-                onSlideChange={(swiper) => updateScrollState(swiper)}
-                onReachBeginning={() => setCanScrollLeft(false)}
-                onReachEnd={() => setCanScrollRight(false)}
-            >
-                {posts.map((url, i) => (
-                    <SwiperSlide key={i}>
-                        <div className="flex justify-center">
-                            <blockquote
-                                className="instagram-media"
-                                data-instgrm-permalink={url}
-                                data-instgrm-version="14"
-                                style={{
-                                    background: '#000',
-                                    border: 0,
-                                    margin: '0 auto',
-                                    maxWidth: '400px',
-                                    width: '100%',
-                                    minWidth: '220px',
-                                }}
-                            />
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
         </div>
     );
 }

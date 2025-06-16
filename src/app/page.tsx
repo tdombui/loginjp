@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import YouTubeCarousel from '../app/components/ui/YoutubeCarousel';
-import InstagramCarousel from '../app/components/ui/InstagramCarousel';
+import { useInView } from 'react-intersection-observer';
 import KnobViewer from './components/ui/KnobViewer';
 import AudioController from '../app/components/ui/AudioController';
 import Footer from '../app/components/ui/Footer';
 
 const VideoBackground = dynamic(() => import('./components/VideoBackground'), { ssr: false });
+const LazyYouTubeCarousel = dynamic(() => import('../app/components/ui/YoutubeCarousel'), { ssr: false });
+const LazyInstagramCarousel = dynamic(() => import('../app/components/ui/InstagramCarousel'), { ssr: false });
+
 
 export default function HomePage() {
   const [volume, setVolume] = useState(0.5);
@@ -27,14 +29,15 @@ export default function HomePage() {
       'rgba(0,0,0,0.15)',
       'rgba(0,0,0,0.20)',
       'rgba(0,0,0,0.30)',
-      'rgba(0,0,0,0.35)',
       'rgba(0,0,0,0.40)',
       'rgba(0,0,0,0.50)',
       'rgba(0,0,0,0.60)',
+      'rgba(0,0,0,0.70)',
     ]
   );
   const headerBlur = useTransform(scrollY, [0, 450], ['blur(0px)', 'blur(8px)']);
-
+  const [ytRef, ytInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [igRef, igInView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
@@ -72,7 +75,7 @@ export default function HomePage() {
 
           {/* Rotating Logo */}
           <motion.div
-            className="fixed left-1/2 z-60 w-64 mt-4 sm:w-80"
+            className="fixed left-1/2 z-60 w-64 mt-1 sm:w-80"
             style={{
               top: topSpring,
               scale,
@@ -83,7 +86,7 @@ export default function HomePage() {
             <motion.img
               src="/icons/loginjp_hero.png"
               alt="login.jp logo"
-              className="w-full z-50 drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
+              className="w-full z-50 drop-shadow-[0_0_25px_rgba(255,255,255,1)]"
               animate={{ rotateY: 360 }}
               transition={{
                 rotateY: { repeat: Infinity, duration: 10, ease: 'linear' },
@@ -92,7 +95,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Knob or other right-aligned controls */}
-          <div className="pointer-events-auto ml-auto">
+          <div className="pointer-events-auto ml-auto mb-4">
             <KnobViewer onChange={setVolume} />
           </div>
         </div>
@@ -111,28 +114,53 @@ export default function HomePage() {
       <section className="relative h-screen w-full flex items-center justify-center select-none">
         <VideoBackground />
       </section>
+      <section className="relative z-10 py-12 px-4 flex justify-center items-center">
+        <motion.p
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.4 }}
+          className="text-white text-center font-mono text-md md:text-md max-w-xl leading-relaxed select-none"
+        >
+          archiving the Japanese experience through music
+        </motion.p>
+      </section>
 
-      {/* YouTube Carousel Section */}
-      <section className="relative bg-black/60 backdrop-blur-sm text-white py-12 z-10 select-none">
 
+      {/* YouTube Carousel Section (lazy mount) */}
+      <section ref={ytRef} className="relative  text-white py-12 z-10 select-none overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none mix-blend-screen opacity-40"
+          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none mix-blend-screen opacity-0"
         >
           <source
             src="https://res.cloudinary.com/dd5cgipkp/video/upload/v1749801143/output_jl6kq4.webm"
             type="video/webm"
           />
         </video>
-        <YouTubeCarousel />
+        <motion.div
+          className="relative z-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={ytInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          {ytInView && <LazyYouTubeCarousel />}
+        </motion.div>
       </section>
 
-      {/* Instagram Carousel Section */}
-      <section className="relative text-white py-12 z-10 select-none">
-        <InstagramCarousel />
+      {/* Instagram Carousel Section (lazy mount) */}
+      <section ref={igRef} className="relative text-white py-12 z-10 select-none overflow-hidden">
+        <motion.div
+          className="relative z-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={igInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          {igInView && <LazyInstagramCarousel />}
+        </motion.div>
       </section>
 
       {/* Footer */}

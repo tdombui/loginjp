@@ -69,17 +69,17 @@ export default function YouTubeCarousel() {
     };
 
     return (
-        <section className="py-2 px-6 md:px-6 relative ">
+        <section className="py-2 px-6 md:px-10 pr-12 relative ">
 
             <div className="flex items-center justify-between mb-4">
 
-                <h2 className='text-white font-semibold text-xl'>Recent Videos</h2>
+                <h2 className='text-white font-semibold text-xl font-mono'>Recent Videos</h2>
                 {/* 最近の動画 */}
                 <a
                     href="https://www.youtube.com/@loginnjp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-md text-blue-400 hover:underline"
+                    className="text-sm text-blue-400 hover:underline font-mono"
                 >
                     View channel →
                 </a>

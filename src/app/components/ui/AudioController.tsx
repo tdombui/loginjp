@@ -84,7 +84,7 @@ export default function AudioController({
     return (
         <>
             {/* LED Meter - stays fixed on right-center */}
-            <div className="fixed right-2 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center pointer-events-auto py-4 mr-8">
+            <div className="fixed right-2 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center pointer-events-auto py-4 mr-1">
                 {/* Dual LED Columns (duplicated for L/R visual) */}
                 <div className="flex gap-2">
                     {[...Array(2)].map((_, colIdx) => (
