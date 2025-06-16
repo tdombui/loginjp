@@ -3,59 +3,79 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function AudioController({ src, volume }: { src: string; volume: number }) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const contextRef = useRef<AudioContext | null>(null);
+    const analyserRef = useRef<AnalyserNode | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [level, setLevel] = useState(0);
-    const analyserRef = useRef<AnalyserNode | null>(null);
 
-    useEffect(() => {
+    const setupAudio = async () => {
+        if (!audioRef.current) {
+            const audio = new Audio(src);
+            audio.loop = true;
+            audio.volume = volume;
+            audioRef.current = audio;
 
-        const audio = new Audio(src);
-        audio.loop = true;
-        audio.volume = volume;
-        audioRef.current = audio;
+            const context = new AudioContext();
+            contextRef.current = context;
 
-        const context = new AudioContext();
-        const srcNode = context.createMediaElementSource(audio);
-        const analyser = context.createAnalyser();
-        analyser.fftSize = 64;
+            const srcNode = context.createMediaElementSource(audio);
+            const analyser = context.createAnalyser();
+            analyser.fftSize = 64;
 
-        const gain = context.createGain();
-        gain.gain.value = volume;
+            const gain = context.createGain();
+            gain.gain.value = volume;
 
-        srcNode.connect(gain);
-        gain.connect(analyser);
-        analyser.connect(context.destination);
+            srcNode.connect(gain);
+            gain.connect(analyser);
+            analyser.connect(context.destination);
 
-        analyserRef.current = analyser;
+            analyserRef.current = analyser;
 
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-        const updateLevel = () => {
-            analyser.getByteFrequencyData(dataArray);
-            const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-            setLevel(avg);
-            requestAnimationFrame(updateLevel);
-        };
+            const updateLevel = () => {
+                if (!analyserRef.current) return;
+                analyserRef.current.getByteFrequencyData(dataArray);
+                const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+                setLevel(avg);
+                requestAnimationFrame(updateLevel);
+            };
 
-        updateLevel();
-    }, [src, volume]);
+            updateLevel();
+        }
+
+        try {
+            await audioRef.current.play();
+            setIsPlaying(true);
+        } catch (err) {
+            console.warn('Audio play failed:', err);
+        }
+    };
+
+    const togglePlayback = async () => {
+        const audio = audioRef.current;
+        if (!audio) {
+            await setupAudio();
+        } else {
+            if (isPlaying) {
+                audio.pause();
+                setIsPlaying(false);
+            } else {
+                await audio.play();
+                setIsPlaying(true);
+            }
+        }
+    };
 
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.volume = volume;
         }
-    }, [volume]);
-
-    const togglePlayback = async () => {
-        const audio = audioRef.current;
-        if (!audio) return;
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            await audio.play();
+        if (contextRef.current) {
+            const gain = contextRef.current.createGain();
+            gain.gain.value = volume;
         }
-        setIsPlaying(!isPlaying);
-    };
+    }, [volume]);
 
     return (
         <div className="fixed right-2 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4 pointer-events-auto">
@@ -79,10 +99,10 @@ export default function AudioController({ src, volume }: { src: string; volume: 
                 })}
             </div>
 
-            {/* Play/Pause Button under LEDs */}
+            {/* Play/Pause Button */}
             <button
                 onClick={togglePlayback}
-                className="w-10 h-10 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors flex items-center justify-center bto"
+                className="w-10 h-10 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors flex items-center justify-center"
                 aria-label="Toggle Playback"
             >
                 {isPlaying ? (

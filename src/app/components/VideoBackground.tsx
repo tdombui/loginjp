@@ -1,10 +1,20 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function VideoBackground() {
     const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (video) {
+            video.muted = true; // Redundant but ensures compliance
+            video.play().catch((err) => {
+                console.warn('Autoplay failed:', err);
+            });
+        }
+    }, []);
 
     return (
         <div className="fixed inset-0 z-0 w-screen h-screen overflow-hidden">
@@ -12,13 +22,14 @@ export default function VideoBackground() {
             <video
                 ref={videoRef}
                 autoPlay
+                muted
                 playsInline
                 preload="auto"
                 className="absolute top-0 left-0 w-full h-full object-cover"
                 onEnded={() => {
                     const video = videoRef.current;
                     if (video) {
-                        video.pause(); // Ensure reset starts clean
+                        video.pause();
                         video.currentTime = 0;
                         requestAnimationFrame(() => {
                             video.play().catch(() => { });
@@ -26,15 +37,11 @@ export default function VideoBackground() {
                     }
                 }}
             >
-
                 <source
                     src="https://res.cloudinary.com/dd5cgipkp/video/upload/f_auto,q_auto/v1749797985/hero-dithered-854x480_ip3mgq.webm"
                     type="video/webm"
                 />
             </video>
-
-
-
 
             {/* ✨ VHS Overlay (always playing on top) */}
             <video
@@ -63,8 +70,6 @@ export default function VideoBackground() {
 
             {/* 🕶️ Dark overlay for clarity */}
             <div className="absolute inset-0 bg-black/45 z-30" />
-
-
         </div>
     );
 }
