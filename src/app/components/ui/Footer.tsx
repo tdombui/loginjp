@@ -11,7 +11,7 @@ export default function Footer() {
             <span className="opacity-80">
                 © {year} LOGIN.JP
             </span>
-            <span className="text-xs opacity-80">archiving the Japanese experience through music</span>
+
             <div className="flex gap-4 items-center">
                 <Link
                     href="https://www.instagram.com/login.jp_"
@@ -35,3 +35,4 @@ export default function Footer() {
         </footer>
     );
 }
+//             <span className="text-xs opacity-80">archiving the Japanese experience through music</span>
