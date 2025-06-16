@@ -17,7 +17,7 @@ export default function HomePage() {
   const { scrollY } = useScroll();
   const scale = useTransform(scrollY, [0, 400], [1, 0.5]);
   const top = useTransform(scrollY, [0, 150], ['50vh', '0.2rem']);
-  const opacity = useTransform(scrollY, [0, 10], [1, 1]);
+  // const opacity = useTransform(scrollY, [0, 10], [1, 1]);
   const headerBg = useTransform(scrollY, [0, 100], ['transparent', 'rgba(0,0,0,0.3)']);
   const headerBlur = useTransform(scrollY, [0, 100], ['blur(0px)', 'blur(8px)']);
 
