@@ -74,7 +74,7 @@ export default function InstagramCarousel() {
                     {/* 最近の投稿 */}
                 </div>
                 <a
-                    href="https://www.instagram.com/login.jp"
+                    href="https://www.instagram.com/login.jp_/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-blue-400 hover:underline font-mono"
